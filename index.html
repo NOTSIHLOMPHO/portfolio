@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hlompho Notsi Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <h1>Hlompho Notsi</h1>
+    <p>Software Developer | Full Stack Developer</p>
+  </header>
+  <nav>
+    <ul>
+    <li><a href="#about">About Me</a></li>                     
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>                    
+    <li><a href="#settings">Settings</a></li>
+  </ul>
+  </nav>
+  <section id="about">
+    <h2>About Me</h2>
+    <img src="profile.jpg" alt="Notsi Profile Picture" class="profile-picture">
+    <p>I'm a 25-year-old passionate information Technology professional with skills in software development, database management, computer networking and system security,
+      <b>Currently holding Bachelor degree in IT</b> and passionate about solving real-world problems using tech — especially embedded systems, apps, and smart devices.</p>
+      <br>
+      <br>
+      <br>
+      <br>
+    <h3><u>Education</u></h3>
+    <h4>Limkokwing University Of Creative Technology</h4>
+    <p>Bachelor of Science in Information Technology(August 2021 - June 2025)<br></p>
+
+    <h4>St Barnabas High school</h4>
+    <p>LGSC Certificate(2015 - 2019)<br></p>
+  
+    <h4>Primary Certificate</h4>
+    <p>O.B.Collins(2007 - 2014)<br></p>
+
+    <h3><u>Skills</u></h3>
+    <h3><u>Experiences</u></h3>
+    <p>newbie but making my name and gain through freelancy<br></p>
+
+  
+  </section>
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">
+      <h3>Smart Water Metering System</h3>
+      <p>Built with ESP32, sensors, and Firebase to monitor usage and alert users in real time.</p>
+    </div>
+    <div class="project">
+      <h3>Loan Prediction AI Model</h3>
+      <p>Developed a loan prediction system using machine learning models to predict whether a person will get their loan approved or not.</p>
+    </div>
+    <div class="project">
+      <h3>Distributed Bulk Email Sender</h3>
+      <p>Developed a scalable and fault-tolerant bulk email delivery system using Java, capable of sending millions of emails efficiently.</p>
+    </div>
+    <div class="project">
+      <h3>Smart Home Power Tracker (Ongoing)</h3>
+      <p>Built with ESP32, sensors, and Firebase to monitor usage and alert users in real time.</p>
+    </div>
+  </section>
+  <section id="posters">
+    <h2>My Posters</h2>
+    <img src="poster.jpg" alt="Notsi poster" class="poster">
+  </section>
+  <section id="contact">
+  <h2>Contact</h2>
+  <p>Email: <a href="emailto:coolestkid201@gmail.com">coolestkid201@gmail.com</a></p>
+  <p>Phone: +266 6367 4140</p>
+  <div class="social-links">
+    <a href="https: //facebook.com/hlompho" target="_blank"  >                                                       
+      <i class="fa fa-facebook" aria-hidden="true"></i>Facabook
+    </a>
+    <a href="https://wa.me/+266 53879852" target="_blank">
+      <i class="fa fa-whatsapp" aria-hidden="true"></i>whatsapp
+    </a>
+    <a href="https://linkedin.com/in/profile " target="_blank"></a>                                                            
+      <i class="fa fa-linkedin" aria-hidden="true"></i> linkedin
+    </a>
+    <a href="https://www.twitter.com/your-twitter-profile" target="_blank">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+  </div>
+</section>
+<section id="SETTINGS">
+<div class="settings-container">
+    <h2>Settings</h2>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider round"></span>
+    </label>
+    <p id="modeLabel">Light Mode</p>
+    <h3>Other Settings</h3>
+    <ul>
+      <li>
+        <label>
+          <input type="checkbox" id="fontSizeToggle">
+          Large Font Size
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="highContrastToggle">
+          High Contrast Mode
+        </label>
+      </li>
+    </ul>
+  </div>
+  <script>
+    const toggle = document.getElementById("modeToggle");
+    const label = document.getElementById("modeLabel");
+    const body = document.body;
+    const fontSizeToggle = document.getElementById("fontSizeToggle");
+    const highContrastToggle = document.getElementById("highContrastToggle");
+
+    toggle.addEventListener("change", () => {
+      body.classList.toggle("dark");
+      label.textContent = body.classList.contains("dark") ? "Dark Mode" : "Light Mode";
+    });
+
+    fontSizeToggle.addEventListener("change", () => {
+      body.classList.toggle("large-font");
+    });
+
+    highContrastToggle.addEventListener("change", () => {
+      body.classList.toggle("high-contrast");
+    });
+  </script>
+  </section>
+<footer>
+    <p>&copy; 2025 Notsi Notsi</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
