@@ -1,131 +1,177 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('nav ul li a').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const targetId = link.getAttribute('href');
-    document.querySelector(targetId).scrollIntoView({
-      behavior: 'smooth'
-    });
-    
-    // Update active nav link
-    document.querySelectorAll('nav ul li a').forEach(navLink => {
-      navLink.classList.remove('active');
-    });
-    link.classList.add('active');
+// ======================
+// NAVIGATION + SMOOTH SCROLL
+// ======================
+
+const nav = document.querySelector("nav");
+const navLinks = document.querySelectorAll("nav ul li a");
+const sections = document.querySelectorAll("section");
+
+// Smooth scroll with nav offset fix
+navLinks.forEach(link => {
+  link.addEventListener("click", e => {
+    const targetId = link.getAttribute("href");
+
+    // Only handle internal links
+    if (targetId && targetId.startsWith("#")) {
+      e.preventDefault();
+
+      const target = document.querySelector(targetId);
+
+      if (target) {
+        const navHeight = nav ? nav.offsetHeight : 70;
+
+        window.scrollTo({
+          top: target.offsetTop - navHeight,
+          behavior: "smooth"
+        });
+      }
+
+      // Update active link immediately
+      navLinks.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+    }
   });
 });
 
-// Highlight active section in navbar
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('nav ul li a');
 
-window.addEventListener('scroll', () => {
-  let current = '';
-  
+// ======================
+// ACTIVE NAV ON SCROLL
+// ======================
+
+window.addEventListener("scroll", () => {
+  let currentSection = "";
+  const navHeight = nav ? nav.offsetHeight : 70;
+
   sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    
-    if (pageYOffset >= sectionTop - 200) {
-      current = section.getAttribute('id');
+    const sectionTop = section.offsetTop - navHeight - 50;
+
+    if (window.scrollY >= sectionTop) {
+      currentSection = section.getAttribute("id");
     }
   });
-  
+
   navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
+    link.classList.remove("active");
+
+    if (link.getAttribute("href") === `#${currentSection}`) {
+      link.classList.add("active");
     }
   });
 });
 
-// Section animation on scroll
-window.addEventListener('scroll', () => {
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    const windowHeight = window.innerHeight;
-    const scrollPosition = window.scrollY;
 
-    if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-      section.classList.add('animate');
-    }
-  });
+// ======================
+// SECTION ANIMATION (MODERN WAY)
+// ======================
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate");
+      }
+    });
+  },
+  {
+    threshold: 0.2
+  }
+);
+
+sections.forEach(section => {
+  observer.observe(section);
 });
 
-// Add CSS animation styles
-const style = document.createElement('style');
-style.innerHTML = `
-  section {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  }
 
-  section.animate {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-document.head.appendChild(style);
+// ======================
+// SETTINGS SYSTEM (DARK MODE, FONT, CONTRAST)
+// ======================
 
-// Settings toggle functionality
-const toggle = document.getElementById('modeToggle');
-const label = document.getElementById('modeLabel');
 const body = document.body;
-const fontSizeToggle = document.getElementById('fontSizeToggle');
-const highContrastToggle = document.getElementById('highContrastToggle');
 
-// Check for saved user preferences
-if (localStorage.getItem('darkMode') === 'enabled') {
-  body.classList.add('dark');
-  toggle.checked = true;
-  label.textContent = 'Dark Mode';
+const modeToggle = document.getElementById("modeToggle");
+const fontSizeToggle = document.getElementById("fontSizeToggle");
+const highContrastToggle = document.getElementById("highContrastToggle");
+const modeLabel = document.getElementById("modeLabel");
+
+
+// ======================
+// LOAD SAVED SETTINGS
+// ======================
+
+if (localStorage.getItem("darkMode") === "enabled") {
+  body.classList.add("dark");
+  if (modeToggle) modeToggle.checked = true;
+  if (modeLabel) modeLabel.textContent = "Dark Mode";
 }
 
-if (localStorage.getItem('largeFont') === 'enabled') {
-  body.classList.add('large-font');
-  fontSizeToggle.checked = true;
+if (localStorage.getItem("largeFont") === "enabled") {
+  body.classList.add("large-font");
+  if (fontSizeToggle) fontSizeToggle.checked = true;
 }
 
-if (localStorage.getItem('highContrast') === 'enabled') {
-  body.classList.add('high-contrast');
-  highContrastToggle.checked = true;
+if (localStorage.getItem("highContrast") === "enabled") {
+  body.classList.add("high-contrast");
+  if (highContrastToggle) highContrastToggle.checked = true;
 }
 
-// Event listeners for settings
-toggle.addEventListener('change', () => {
-  body.classList.toggle('dark');
-  if (body.classList.contains('dark')) {
-    label.textContent = 'Dark Mode';
-    localStorage.setItem('darkMode', 'enabled');
-  } else {
-    label.textContent = 'Light Mode';
-    localStorage.setItem('darkMode', 'disabled');
-  }
-});
 
-fontSizeToggle.addEventListener('change', () => {
-  body.classList.toggle('large-font');
-  if (body.classList.contains('large-font')) {
-    localStorage.setItem('largeFont', 'enabled');
-  } else {
-    localStorage.setItem('largeFont', 'disabled');
-  }
-});
+// ======================
+// DARK MODE TOGGLE
+// ======================
 
-highContrastToggle.addEventListener('change', () => {
-  body.classList.toggle('high-contrast');
-  if (body.classList.contains('high-contrast')) {
-    localStorage.setItem('highContrast', 'enabled');
-  } else {
-    localStorage.setItem('highContrast', 'disabled');
-  }
-});
+if (modeToggle) {
+  modeToggle.addEventListener("change", () => {
+    body.classList.toggle("dark");
 
-// Initialize animations on page load
-window.addEventListener('load', () => {
+    const isDark = body.classList.contains("dark");
+
+    localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+
+    if (modeLabel) {
+      modeLabel.textContent = isDark ? "Dark Mode" : "Light Mode";
+    }
+  });
+}
+
+
+// ======================
+// FONT SIZE TOGGLE
+// ======================
+
+if (fontSizeToggle) {
+  fontSizeToggle.addEventListener("change", () => {
+    body.classList.toggle("large-font");
+
+    localStorage.setItem(
+      "largeFont",
+      body.classList.contains("large-font") ? "enabled" : "disabled"
+    );
+  });
+}
+
+
+// ======================
+// HIGH CONTRAST TOGGLE
+// ======================
+
+if (highContrastToggle) {
+  highContrastToggle.addEventListener("change", () => {
+    body.classList.toggle("high-contrast");
+
+    localStorage.setItem(
+      "highContrast",
+      body.classList.contains("high-contrast") ? "enabled" : "disabled"
+    );
+  });
+}
+
+
+// ======================
+// INITIAL PAGE LOAD ANIMATION
+// ======================
+
+window.addEventListener("load", () => {
   sections.forEach(section => {
-    section.classList.add('animate');
+    section.classList.add("animate");
   });
 });
