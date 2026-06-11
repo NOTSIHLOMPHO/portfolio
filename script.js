@@ -1,71 +1,61 @@
-// ======================
-// NAVIGATION + SMOOTH SCROLL
-// ======================
-
+/* ======================
+   DOM REFERENCES
+====================== */
 const nav = document.querySelector("nav");
-const navLinks = document.querySelectorAll("nav ul li a");
+const navLinks = document.querySelectorAll("nav a");
 const sections = document.querySelectorAll("section");
 
-// Smooth scroll with nav offset fix
+/* ======================
+   SMOOTH SCROLL (PRO LEVEL)
+====================== */
 navLinks.forEach(link => {
-  link.addEventListener("click", e => {
+  link.addEventListener("click", (e) => {
     const targetId = link.getAttribute("href");
 
-    // Only handle internal links
     if (targetId && targetId.startsWith("#")) {
       e.preventDefault();
 
       const target = document.querySelector(targetId);
+      if (!target) return;
 
-      if (target) {
-        const navHeight = nav ? nav.offsetHeight : 70;
+      const navHeight = nav ? nav.offsetHeight : 70;
 
-        window.scrollTo({
-          top: target.offsetTop - navHeight,
-          behavior: "smooth"
-        });
-      }
-
-      // Update active link immediately
-      navLinks.forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
+      window.scrollTo({
+        top: target.offsetTop - navHeight,
+        behavior: "smooth"
+      });
     }
   });
 });
 
-
-// ======================
-// ACTIVE NAV ON SCROLL
-// ======================
-
+/* ======================
+   ACTIVE NAV (OPTIMIZED)
+====================== */
 window.addEventListener("scroll", () => {
-  let currentSection = "";
-  const navHeight = nav ? nav.offsetHeight : 70;
+  const scrollPos = window.scrollY + 120;
+
+  let current = "";
 
   sections.forEach(section => {
-    const sectionTop = section.offsetTop - navHeight - 50;
-
-    if (window.scrollY >= sectionTop) {
-      currentSection = section.getAttribute("id");
+    if (scrollPos >= section.offsetTop) {
+      current = section.id;
     }
   });
 
   navLinks.forEach(link => {
     link.classList.remove("active");
 
-    if (link.getAttribute("href") === `#${currentSection}`) {
+    if (link.getAttribute("href") === `#${current}`) {
       link.classList.add("active");
     }
   });
 });
 
-
-// ======================
-// SECTION ANIMATION (MODERN WAY)
-// ======================
-
+/* ======================
+   SCROLL REVEAL (ELITE ANIMATION SYSTEM)
+====================== */
 const observer = new IntersectionObserver(
-  entries => {
+  (entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("animate");
@@ -73,7 +63,7 @@ const observer = new IntersectionObserver(
     });
   },
   {
-    threshold: 0.2
+    threshold: 0.15
   }
 );
 
@@ -81,11 +71,9 @@ sections.forEach(section => {
   observer.observe(section);
 });
 
-
-// ======================
-// SETTINGS SYSTEM (DARK MODE, FONT, CONTRAST)
-// ======================
-
+/* ======================
+   SETTINGS SYSTEM
+====================== */
 const body = document.body;
 
 const modeToggle = document.getElementById("modeToggle");
@@ -93,38 +81,37 @@ const fontSizeToggle = document.getElementById("fontSizeToggle");
 const highContrastToggle = document.getElementById("highContrastToggle");
 const modeLabel = document.getElementById("modeLabel");
 
+/* ======================
+   LOAD SAVED SETTINGS
+====================== */
+function loadSettings() {
+  if (localStorage.getItem("darkMode") === "enabled") {
+    body.classList.add("dark");
+    if (modeToggle) modeToggle.checked = true;
+    if (modeLabel) modeLabel.textContent = "Dark Mode";
+  }
 
-// ======================
-// LOAD SAVED SETTINGS
-// ======================
+  if (localStorage.getItem("largeFont") === "enabled") {
+    body.classList.add("large-font");
+    if (fontSizeToggle) fontSizeToggle.checked = true;
+  }
 
-if (localStorage.getItem("darkMode") === "enabled") {
-  body.classList.add("dark");
-  if (modeToggle) modeToggle.checked = true;
-  if (modeLabel) modeLabel.textContent = "Dark Mode";
+  if (localStorage.getItem("highContrast") === "enabled") {
+    body.classList.add("high-contrast");
+    if (highContrastToggle) highContrastToggle.checked = true;
+  }
 }
 
-if (localStorage.getItem("largeFont") === "enabled") {
-  body.classList.add("large-font");
-  if (fontSizeToggle) fontSizeToggle.checked = true;
-}
+loadSettings();
 
-if (localStorage.getItem("highContrast") === "enabled") {
-  body.classList.add("high-contrast");
-  if (highContrastToggle) highContrastToggle.checked = true;
-}
-
-
-// ======================
-// DARK MODE TOGGLE
-// ======================
-
+/* ======================
+   DARK MODE
+====================== */
 if (modeToggle) {
   modeToggle.addEventListener("change", () => {
     body.classList.toggle("dark");
 
     const isDark = body.classList.contains("dark");
-
     localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
 
     if (modeLabel) {
@@ -133,11 +120,9 @@ if (modeToggle) {
   });
 }
 
-
-// ======================
-// FONT SIZE TOGGLE
-// ======================
-
+/* ======================
+   FONT SIZE
+====================== */
 if (fontSizeToggle) {
   fontSizeToggle.addEventListener("change", () => {
     body.classList.toggle("large-font");
@@ -149,11 +134,9 @@ if (fontSizeToggle) {
   });
 }
 
-
-// ======================
-// HIGH CONTRAST TOGGLE
-// ======================
-
+/* ======================
+   HIGH CONTRAST MODE
+====================== */
 if (highContrastToggle) {
   highContrastToggle.addEventListener("change", () => {
     body.classList.toggle("high-contrast");
@@ -165,12 +148,12 @@ if (highContrastToggle) {
   });
 }
 
-
-// ======================
-// INITIAL PAGE LOAD ANIMATION
-// ======================
-
+/* ======================
+   PAGE LOAD ANIMATION (CLEAN)
+====================== */
 window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+
   sections.forEach(section => {
     section.classList.add("animate");
   });
