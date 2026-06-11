@@ -3,60 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Settings</title>
+  <title>Settings | Notsi Portfolio</title>
+
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <h1>Settings</h1>
+  <p>Customize your experience</p>
+</header>
+
+<!-- ================= NAVIGATION ================= -->
 <nav>
   <ul>
-    <li><a href="index.html">About Me</a></li>                     
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>                    
-    <li><a href="settings.html">Settings</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="settings.html" class="active">Settings</a></li>
   </ul>
 </nav>
-<body>
-  <div class="settings-container">
-    <h2>Settings</h2>
+
+<!-- ================= SETTINGS ================= -->
+<main>
+
+<div class="settings-container">
+
+  <h2>Appearance Settings</h2>
+
+  <!-- DARK MODE -->
+  <div class="setting-item">
     <label class="switch">
       <input type="checkbox" id="modeToggle">
-      <span class="slider round"></span>
+      <span class="slider"></span>
     </label>
-    <p id="modeLabel">Light Mode</p>
-    <h3>Other Settings</h3>
-    <ul>
-      <li>
-        <label>
-          <input type="checkbox" id="fontSizeToggle">
-          Large Font Size
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" id="highContrastToggle">
-          High Contrast Mode
-        </label>
-      </li>
-    </ul>
+    <span id="modeLabel">Light Mode</span>
   </div>
-  <script>
-    const toggle = document.getElementById("modeToggle");
-    const label = document.getElementById("modeLabel");
-    const body = document.body;
-    const fontSizeToggle = document.getElementById("fontSizeToggle");
-    const highContrastToggle = document.getElementById("highContrastToggle");
 
-    toggle.addEventListener("change", () => {
-      body.classList.toggle("dark");
-      label.textContent = body.classList.contains("dark") ? "Dark Mode" : "Light Mode";
-    });
+  <hr>
 
-    fontSizeToggle.addEventListener("change", () => {
-      body.classList.toggle("large-font");
-    });
+  <!-- FONT SIZE -->
+  <div class="setting-item">
+    <label>
+      <input type="checkbox" id="fontSizeToggle">
+      Large Font Size
+    </label>
+  </div>
 
-    highContrastToggle.addEventListener("change", () => {
-      body.classList.toggle("high-contrast");
-    });
-  </script>
+  <!-- HIGH CONTRAST -->
+  <div class="setting-item">
+    <label>
+      <input type="checkbox" id="highContrastToggle">
+      High Contrast Mode
+    </label>
+  </div>
+
+</div>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>&copy; 2026 Notsi Notsi Portfolio</p>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
